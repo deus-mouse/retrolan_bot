@@ -23,12 +23,6 @@ kb = ReplyKeyboardMarkup(resize_keyboard=True,
                          one_time_keyboard=True  # чтобы сворачивалась
                          )
 
-ikb = InlineKeyboardMarkup(row_width=2)
-ib1 = InlineKeyboardButton(text='форма', url='https://forms.gle/dYLcPHocXMExP15X8')
-
-# ikb.add(ib1, ib2)  # в одной строке
-ikb.add(ib1)
-
 text_storage = SimpleNamespace(
     help='<b>/start</b> - <em>начать работу с ботом</em>\n'
          '<b>/help</b> - <em>список команд</em>\n'
