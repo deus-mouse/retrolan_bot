@@ -1,4 +1,4 @@
-from bot.helpers import survey_flow
+from bot.helpers import survey_flow, check_blacklist
 from aiogram import types
 from aiogram.types import ReplyKeyboardRemove
 from bot.instances import bot, dp, surveys_holder, surveys_complete_holder, text_storage, Survey
@@ -27,7 +27,8 @@ async def start_command(message: types.Message):
 
 @dp.message_handler(commands=['start_survey'])
 async def links_command(message: types.Message):
-    if message.from_user.id not in surveys_complete_holder:
+    # if message.from_user.id not in surveys_complete_holder:
+    if not check_blacklist(message.from_user.id):
         survey = Survey(id=message.from_user.id)
         survey.switch = True
         surveys_holder.append(survey)

@@ -1,5 +1,7 @@
 from bot.instances import bot, surveys_holder, id_storage, surveys_complete_holder, logging
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+import os
+import pandas as pd
 
 
 async def survey_flow(message):
@@ -26,3 +28,11 @@ async def survey_flow(message):
                 await message.answer('Я подумаю, посовещаюсь с гаражниками, и дам свой ответ 🤖')
                 surveys_complete_holder.add(message.from_user.id)
                 surveys_holder.pop(index)
+
+
+def check_blacklist(id):
+    file = f'{os.getcwd()}/bot/blacklist.xlsx'
+    worksheet = pd.read_excel(file, sheet_name='Sheet1')
+    prompt_name_row = worksheet['id']
+    blacklist = [line for line in prompt_name_row]
+    return id in blacklist
