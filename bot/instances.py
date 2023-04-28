@@ -4,9 +4,16 @@ from config import retrolan_bot_token
 from types import SimpleNamespace
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, \
     InlineKeyboardButton
+import os
 
 
 API_TOKEN = retrolan_bot_token
+id_storage = dict(говорящий_гараж=-812977869, me=279478014)
+surveys_holder = list()
+# surveys_complete_holder = set()
+# blacklist_file = f'{os.getcwd()}/blacklist.xlsx'
+blacklist_file = 'rb-blacklist.xlsx'
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -39,12 +46,6 @@ for button in text_storage.__dict__.keys():
     kb.add(KeyboardButton(f'/{button}'))
 
 
-id_storage = dict(говорящий_гараж=-812977869, me=279478014)
-
-surveys_holder = list()
-surveys_complete_holder = set()
-
-
 class Survey:
     def __init__(self, id):
         self.id = id
@@ -53,15 +54,15 @@ class Survey:
         self.questions = [
             # 'Ссылка на акк в телеграме',
             'Звать то тебя как?',
-            'Сколько годков тебе?',
-            'Так мы тебя и запишем, а мог бы себя и попиздаче записать.'
-            'Ты же понимаешь что от всех этих ответов зависит попадешь ты к нам или нет?',
-            'Как там с деньгами вопрос обстоит?',
-            'Хм... а ты вообще откуда? Есть соцсети?',
-            'А чем вообще увлекаешься?',
-            'И откуда ты услышал обо мне?',
-            'Женат? или вилкой в глаз?',
-            'А гамать во что любишь?',
+            # 'Сколько годков тебе?',
+            # 'Так мы тебя и запишем, а мог бы себя и попиздаче записать.'
+            # 'Ты же понимаешь что от всех этих ответов зависит попадешь ты к нам или нет?',
+            # 'Как там с деньгами вопрос обстоит?',
+            # 'Хм... а ты вообще откуда? Есть соцсети?',
+            # 'А чем вообще увлекаешься?',
+            # 'И откуда ты услышал обо мне?',
+            # 'Женат? или вилкой в глаз?',
+            # 'А гамать во что любишь?',
         ]
         self.answers = []
         self.dump = None

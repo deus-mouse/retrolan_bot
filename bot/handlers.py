@@ -1,7 +1,7 @@
-from bot.helpers import survey_flow, check_blacklist
+from bot.helpers import survey_flow, check_blacklist, blacklist_update
 from aiogram import types
 from aiogram.types import ReplyKeyboardRemove
-from bot.instances import bot, dp, surveys_holder, surveys_complete_holder, text_storage, Survey
+from bot.instances import bot, dp, surveys_holder, text_storage, Survey
 
 
 async def on_startup(_):

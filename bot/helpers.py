@@ -1,7 +1,7 @@
-from bot.instances import bot, surveys_holder, id_storage, surveys_complete_holder, logging
+
+from bot.instances import bot, surveys_holder, id_storage, logging, blacklist_file
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import os
-import pandas as pd
+import openpyxl
 
 
 async def survey_flow(message):
@@ -26,13 +26,26 @@ async def survey_flow(message):
                 await bot.send_message(id_storage['me'], text=survey.send(), parse_mode='HTML',
                                        reply_markup=markup)
                 await message.answer('Я подумаю, посовещаюсь с гаражниками, и дам свой ответ 🤖')
-                surveys_complete_holder.add(message.from_user.id)
+                # surveys_complete_holder.add(message.from_user.id)
+                blacklist_update(message.from_user.id)
                 surveys_holder.pop(index)
 
 
-def check_blacklist(id):
-    file = f'{os.getcwd()}/bot/blacklist.xlsx'
-    worksheet = pd.read_excel(file, sheet_name='Sheet1')
-    prompt_name_row = worksheet['id']
-    blacklist = [line for line in prompt_name_row]
+def check_blacklist(id) -> bool:
+    book = openpyxl.open(blacklist_file)
+    sheet = book.active
+    # print(f'{sheet["A2"].value=}')
+    # print(f'{sheet[2][0].value=}')
+    column = sheet['A']
+    blacklist = [item.value for item in column]
     return id in blacklist
+
+
+def blacklist_update(id):
+    print(f'{id=}')
+    book = openpyxl.open(blacklist_file)
+    sheet = book.active
+    column = sheet['A']
+    sheet[len(column)+1][0].value = id
+    book.save(blacklist_file)
+    book.close()
