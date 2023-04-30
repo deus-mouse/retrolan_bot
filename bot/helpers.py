@@ -42,7 +42,6 @@ def check_blacklist(id) -> bool:
 
 
 def blacklist_update(id):
-    print(f'{id=}')
     book = openpyxl.open(blacklist_file)
     sheet = book.active
     column = sheet['A']
